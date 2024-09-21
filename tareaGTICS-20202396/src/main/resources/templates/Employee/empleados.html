@@ -12,7 +12,7 @@
     <!-- Navbar End -->
     <div class="container mt-4">
         <h2>Lista de Empleados</h2>
-        <a class="btn btn-primary">Nuevo Empleado</a>
+        <a href="/empleado/crear" class="btn btn-primary">Nuevo Empleado</a>
 
     </div>
     <div class="container mt-4">
@@ -34,6 +34,7 @@
                 <th scope="col">Puesto</th>
                 <th scope="col">Departamento</th>
                 <th scope="col">Ciudad</th>
+                <th scope="col">Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -42,8 +43,12 @@
                 <td th:text="${empleado.firstName}"></td>
                 <td th:text="${empleado.lastName}"></td>
                 <td th:text="${empleado.job.getJobName()}"></td>
-                <td th:text="${empleado.department.departmentName}"></td>
-                <td th:text="${empleado.department.location.cityName}"></td>
+                <td th:text="${empleado.department != null ? empleado.department.departmentName : 'Sin departamento'}"></td>
+                <td th:text="${empleado.department != null ? empleado.department.location.cityName : 'Sin ciudad'}"></td>
+                <td class="text-center">
+                    <a class="btn btn-primary" th:href="@{'/empleado/editar?id=' + ${empleado.employeeId}}">Editar</a>
+                    <button class="btn btn-danger"> Borrar</button>
+                </td>
             </tr>
             </tbody>
         </table>

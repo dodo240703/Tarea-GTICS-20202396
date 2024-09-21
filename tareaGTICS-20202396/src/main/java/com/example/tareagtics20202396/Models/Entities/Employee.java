@@ -24,11 +24,14 @@ public class Employee {
     @Column(name = "email",nullable = false)
     private String email;
 
-    @Column(name = "phone_number",nullable = false)
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "salary")
     private Double salary;
+
+    @Column(name = "hire_date",nullable = false)
+    private String hireDate;
 
     @ManyToOne
     @JoinColumn(name = "job_id",nullable = false)
