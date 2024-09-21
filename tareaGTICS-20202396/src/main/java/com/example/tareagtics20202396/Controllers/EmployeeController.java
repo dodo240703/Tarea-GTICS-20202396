@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -79,8 +80,31 @@ public class EmployeeController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(Employee employee) {
+    public String guardar(Employee employee, RedirectAttributes attr) {
+        if(employee.getEmployeeId()==null){
+            attr.addFlashAttribute("msg","El empleado se ha creado exitosamente");
+        }else {
+            attr.addFlashAttribute("msg","El empleado se ha actualizado exitosamente");
+        }
         employeeRepository.save(employee);
+
+        return "redirect:/empleado/listaEmpleados";
+    }
+
+    @GetMapping("/borrar")
+    public String borrarEmpleado(Model model, @RequestParam("id") int id, RedirectAttributes attr) {
+        Optional<Employee> optEmpleado = employeeRepository.findById(id);
+
+        if(optEmpleado.isPresent()) {
+
+            try{
+                employeeRepository.deleteById(id);
+                attr.addFlashAttribute("msg","El empleado se ha borrado exitosamente");
+            }catch (Exception e){
+                attr.addFlashAttribute("msg2","No es posible borrar el empleado");
+            }
+
+        }
         return "redirect:/empleado/listaEmpleados";
     }
 }

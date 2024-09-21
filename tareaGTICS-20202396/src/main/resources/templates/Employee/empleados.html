@@ -13,7 +13,10 @@
     <div class="container mt-4">
         <h2>Lista de Empleados</h2>
         <a href="/empleado/crear" class="btn btn-primary">Nuevo Empleado</a>
-
+    </div>
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert">
+    </div>
+    <div th:if="${msg2 != null}" th:text="${msg2}" class="alert alert-danger" role="alert">
     </div>
     <div class="container mt-4">
         <div class="row mb-3">
@@ -47,7 +50,7 @@
                 <td th:text="${empleado.department != null ? empleado.department.location.cityName : 'Sin ciudad'}"></td>
                 <td class="text-center">
                     <a class="btn btn-primary" th:href="@{'/empleado/editar?id=' + ${empleado.employeeId}}">Editar</a>
-                    <button class="btn btn-danger"> Borrar</button>
+                    <a class="btn btn-danger" th:href="@{'/empleado/borrar?id=' + ${empleado.employeeId}}"> Borrar</a>
                 </td>
             </tr>
             </tbody>
